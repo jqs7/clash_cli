@@ -5,5 +5,20 @@
   <br>
 </h1>
 
-A terminal client for [Clash](https://github.com/Dreamacro/clash).
+<h4 align="center">A terminal client for <a href="https://github.com/Dreamacro/clash">Clash</a>.</h4>
 
+![clash_cli](https://user-images.githubusercontent.com/12208686/54497096-91367080-4931-11e9-9851-93b09b91c161.gif)
+
+## Install
+
+You can build from source:
+
+```sh
+go get -u -v github.com/jqs7/clash_cli
+```
+
+Pre-built binaries are available: [release](https://github.com/jqs7/clash_cli/releases)
+
+## Usage
+
+`clash_cli [http://localhost:9090]`
