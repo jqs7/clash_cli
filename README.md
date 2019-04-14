@@ -20,7 +20,7 @@ go get -u -v github.com/jqs7/clash_cli
 Pre-built binaries are available: [release](https://github.com/jqs7/clash_cli/releases)
 
 systemd oneshot service:
-```toml
+```ini
 [Unit]
 Description=Clash CLI
 After=online.target clash.service
