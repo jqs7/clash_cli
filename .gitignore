@@ -1,3 +1,4 @@
 clash_cli
 dist
 .goreleaser.yml
+clash_cli.db

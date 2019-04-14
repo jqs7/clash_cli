@@ -37,5 +37,8 @@ func (sm SwitchMode) Run() error {
 	if err := sm.UpdateMode(T.Mode(result)); err != nil {
 		return err
 	}
+	if err := db.SaveMode(T.Mode(result)); err != nil {
+		return err
+	}
 	return sm.LastStep.Run()
 }

@@ -19,6 +19,22 @@ go get -u -v github.com/jqs7/clash_cli
 
 Pre-built binaries are available: [release](https://github.com/jqs7/clash_cli/releases)
 
+systemd oneshot service:
+```toml
+[Unit]
+Description=Clash CLI
+After=online.target clash.service
+Requires=clash.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/clash_cli -q
+WorkingDirectory=/home/user/.config/clash_cli
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Usage
 
 `clash_cli [http://localhost:9090]`

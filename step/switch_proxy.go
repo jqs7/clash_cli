@@ -57,6 +57,7 @@ func (sp SwitchProxy) Run() error {
 				return err
 			}
 			return sp.LastStep.Run()
+		default:
 		}
 	}
 	return nil
@@ -94,5 +95,8 @@ func (sp SwitchProxy) UpdateProxy(proxies map[string]model.Proxy,
 			LastStep: sp,
 		}.Run()
 	}
-	return sp.Client.UpdateProxy(groupName, items[result].Name)
+	if err := sp.Client.UpdateProxy(groupName, items[result].Name); err != nil {
+		return err
+	}
+	return db.UpdateProxy(groupName, items[result].Name)
 }
