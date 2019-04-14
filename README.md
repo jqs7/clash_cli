@@ -23,7 +23,7 @@ systemd oneshot service:
 ```ini
 [Unit]
 Description=Clash CLI
-After=online.target clash.service
+After=network-online.target clash.service
 Requires=clash.service
 
 [Service]
