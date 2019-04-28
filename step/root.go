@@ -2,18 +2,11 @@ package step
 
 import (
 	"github.com/jqs7/clash_cli/api"
-	"github.com/jqs7/clash_cli/storage"
 	"github.com/manifoldco/promptui"
 )
 
-var db storage.IStorage
-
 type Root struct {
 	*api.Client
-}
-
-func (r Root) SetupDB(DB storage.IStorage) {
-	db = DB
 }
 
 func (r Root) Run() error {

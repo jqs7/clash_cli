@@ -3,6 +3,7 @@ package step
 import (
 	T "github.com/Dreamacro/clash/tunnel"
 	"github.com/jqs7/clash_cli/api"
+	"github.com/jqs7/clash_cli/storage"
 	"github.com/manifoldco/promptui"
 )
 
@@ -37,8 +38,17 @@ func (sm SwitchMode) Run() error {
 	if err := sm.UpdateMode(T.Mode(result)); err != nil {
 		return err
 	}
-	if err := db.SaveMode(T.Mode(result)); err != nil {
+	if err := sm.SaveMode(T.Mode(result)); err != nil {
 		return err
 	}
 	return sm.LastStep.Run()
+}
+
+func (sm SwitchMode) SaveMode(mode T.Mode) error {
+	db, err := storage.Open()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	return db.SaveMode(mode)
 }

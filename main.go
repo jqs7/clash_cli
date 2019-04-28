@@ -18,32 +18,12 @@ func main() {
 	urlArg := kingpin.Arg("endpoint", "clash api endpoint").Default("http://localhost:9090").String()
 	kingpin.Parse()
 
-	db, err := storage.Open()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer db.Close()
-
 	client := &api.Client{
 		BaseURL: getBaseURL(*urlArg),
 	}
 
 	time.Sleep(time.Millisecond * 100)
-	mode, err := db.GetMode()
-	if err == nil {
-		if err := client.UpdateMode(mode); err != nil {
-			log.Println(err)
-		}
-	}
-
-	proxies, err := db.GetProxies()
-	if err == nil {
-		for group, name := range proxies {
-			if err := client.UpdateProxy(group, name); err != nil {
-				log.Println(err)
-			}
-		}
-	}
+	restoreSettings(client)
 
 	if *quit {
 		os.Exit(0)
@@ -52,9 +32,30 @@ func main() {
 	root := step.Root{
 		Client: client,
 	}
-	root.SetupDB(db)
 	if err := root.Run(); err != nil {
 		log.Fatalln(err)
+	}
+}
+
+func restoreSettings(client *api.Client) {
+	db, err := storage.Open()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer db.Close()
+	mode, err := db.GetMode()
+	if err == nil {
+		if err := client.UpdateMode(mode); err != nil {
+			log.Println(err)
+		}
+	}
+	proxies, err := db.GetProxies()
+	if err == nil {
+		for group, name := range proxies {
+			if err := client.UpdateProxy(group, name); err != nil {
+				log.Println(err)
+			}
+		}
 	}
 }
 

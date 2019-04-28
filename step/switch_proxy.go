@@ -7,6 +7,7 @@ import (
 	"github.com/Dreamacro/clash/tunnel"
 	"github.com/jqs7/clash_cli/api"
 	"github.com/jqs7/clash_cli/model"
+	"github.com/jqs7/clash_cli/storage"
 	"github.com/manifoldco/promptui"
 )
 
@@ -98,5 +99,10 @@ func (sp SwitchProxy) UpdateProxy(proxies map[string]model.Proxy,
 	if err := sp.Client.UpdateProxy(groupName, items[result].Name); err != nil {
 		return err
 	}
+	db, err := storage.Open()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
 	return db.UpdateProxy(groupName, items[result].Name)
 }

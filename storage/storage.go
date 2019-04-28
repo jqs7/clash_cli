@@ -2,9 +2,10 @@ package storage
 
 import (
 	"log"
+	"os"
+	"path"
 
 	"github.com/Dreamacro/clash/tunnel"
-
 	"github.com/asdine/storm"
 )
 
@@ -19,7 +20,17 @@ type Client struct {
 }
 
 func Open() (*Client, error) {
-	db, err := storm.Open("clash_cli.db")
+	var db *storm.DB
+	home, err := os.UserHomeDir()
+	if err != nil {
+		db, err = storm.Open("clash_cli.db")
+	} else {
+		cfgPath := path.Join(home, ".config", "clash")
+		if err := os.MkdirAll(cfgPath, os.ModePerm); err != nil {
+			return nil, err
+		}
+		db, err = storm.Open(path.Join(cfgPath, "clash_cli.db"))
+	}
 	if err != nil {
 		return nil, err
 	}
