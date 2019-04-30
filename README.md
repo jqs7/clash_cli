@@ -28,8 +28,8 @@ Requires=clash.service
 
 [Service]
 Type=oneshot
+User=root
 ExecStart=/usr/bin/clash_cli -q
-WorkingDirectory=/home/user/.config/clash_cli
 
 [Install]
 WantedBy=multi-user.target

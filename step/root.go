@@ -13,7 +13,7 @@ func (r Root) Run() error {
 	prompt := promptui.Select{
 		Label: "功能选择",
 		Size:  10,
-		Items: []string{"出站模式", "选择代理", "实时速率", "代理日志", "退出"},
+		Items: []string{"出站模式", "选择代理", "实时速率", "代理日志", "RSS 链接解析", "退出"},
 	}
 
 	_, result, err := prompt.Run()
@@ -41,6 +41,10 @@ func (r Root) Run() error {
 	case "代理日志":
 		step = Log{
 			Client:   r.Client,
+			LastStep: r,
+		}
+	case "RSS 链接解析":
+		step = RSS{
 			LastStep: r,
 		}
 	default:
